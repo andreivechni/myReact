@@ -12,18 +12,48 @@ const Button = (props: any) => {
   ); // Button to increment the count
 };
 
+const Input = (props: any) => {
+  console.log("Input");
+  const [value, setValue] = MyReact.useState("");
+  const onChange = (e: any) => {
+    setValue(e.target.value);
+  };
+
+  return MyReact.createElement("input", {
+    value: value,
+    oninput: onChange, // Use oninput instead of onchange
+    onblur: () => {
+      //   console.log("blur happened");
+    },
+  });
+};
+
+const Greeting = () => {
+  console.log("greeting");
+  return MyReact.createElement(
+    "div",
+    null,
+    Input(null)
+    // value ? MyReact.createElement("div", null, `Hi, ${value}`) : null
+  );
+};
+
 // Define the App component
 function App() {
-  const [count, setCount] = MyReact.useState(0); // Use the useState hook to manage a count state variable
+  console.log("app render");
+  const [count, setCount] = MyReact.useState(1); // Use the useState hook to manage a count state variable
 
-  const increment = () => setCount(count + 1);
+  const increment = function () {
+    return setCount(count + 1);
+  };
 
   // Return the virtual DOM structure for the App component
   return MyReact.createElement(
     "div",
     null,
     Header({ count }),
-    Button({ onClick: increment })
+    Button({ onClick: increment }),
+    Greeting(null)
   );
 }
 
